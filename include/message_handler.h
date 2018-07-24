@@ -16,18 +16,18 @@ public:
 	{
 	}
 
-	template <typename T>
-	auto do_sync(T&& t)-> decltype(t())
+	template <typename Work_t>
+	auto do_sync(Work_t&& Work)-> decltype(Work())
 	{
-		boost::packaged_task<decltype(t())> _pt(std::forward<T>(t));
+		boost::packaged_task<decltype(Work())> _pt(std::forward<Work_t>(Work));
 		_service.post([&]() {_pt(); });
 		return _pt.get_future().get();
 	}
 
-	template <typename T>
-	void do_async(T&& t)
+	template <typename Work_t>
+	void do_async(Work_t&& Work)
 	{
-		_service.post([&]() {t(); });
+		_service.post([&]() {std::forward<Work_t>(t)(); });
 	}
 private:
 	boost::asio::io_service _service;
