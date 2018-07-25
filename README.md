@@ -13,3 +13,6 @@ AMH is a header only library. The boost::asio headers are required to use AMH.
 
 ## Examples
 The examples folder in root contains some standalone examples.
+
+## License
+Unlicensed. For more details check the license file in root.
