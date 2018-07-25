@@ -1,7 +1,4 @@
 #include "boost/asio/io_service.hpp"
-#include <iostream>
-#include <memory>
-#include <utility>
 #include <thread>
 #include <future>
 class MessageProcessor
