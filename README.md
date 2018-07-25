@@ -7,6 +7,7 @@ handler thread to process the posted work items. AMH supports **asynchronous** a
 A thread posting an asynchronous work item does not block. The work item is copied into the message processor and processed while the caller can continue its work.
 A sync call blocks the calling thread until the work has been completed. The result of the work item is copied from the completion handler thread to the caller thread. The caller thread is unblocked when the result has been delivered.
 
+Destructing a message processor is threadsafe. The processor will finish all remaining work in its queue while it blocks the thread that called the destructor. 
 
 ## Build
 AMH is a header only library. The boost::asio headers are required to use AMH. 
