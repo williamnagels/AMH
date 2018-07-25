@@ -27,7 +27,7 @@ public:
 	template <typename Work_t>
 	void do_async(Work_t&& Work)
 	{
-		_service.post([&]() {std::forward<Work_t>(t)(); });
+		_service.post([Work = std::forward<Work_t>(Work)](){Work(); });
 	}
 private:
 	boost::asio::io_service _service;
