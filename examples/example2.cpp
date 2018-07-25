@@ -10,8 +10,10 @@ void free_function()
 int main()
 {
 	MessageProcessor processor;
+	processor.do_sync(free_function);
+	processor.do_async(free_function);
 	processor.do_async(free_function);
 	processor.do_sync(free_function);
 	std::cout << "Got result=" << i << std::endl;
-	//Will print "Got result=2"
+	//Will print "Got result=4"
 }

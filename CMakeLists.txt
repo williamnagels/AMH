@@ -17,7 +17,7 @@ set(Boost_USE_STATIC_LIBS ON)
 find_package(Boost 1.65.0 REQUIRED thread) 
 
 
-add_executable(examples examples/example2.cpp) 
+add_executable(examples examples/example1.cpp) 
 
 target_include_directories(examples 
 	PRIVATE
