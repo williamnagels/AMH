@@ -17,7 +17,7 @@ public:
 	}
 	~MessageProcessor()
 	{
-		_work_item.reset();
+		do_async([&]() {_work_item.reset(); });
 		_thread.join();
 	}
 
