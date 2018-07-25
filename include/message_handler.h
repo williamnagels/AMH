@@ -19,9 +19,10 @@ public:
 	/* @brief Schedule synchronous work.
 	*
 	* Example: int i = do_sync([](){return 1O;}).
-	*
+	* 
 	* Blocks caller thread.
 	*
+	* @return Result of work. 
 	*/
 	template <typename Work_t>
 	auto do_sync(Work_t&& Work)-> decltype(Work())
@@ -33,9 +34,9 @@ public:
 
 	/* @brief Schedule asynchronous work.
 	*
-	* Example: do_async([](){std::cout << "test<< std::endl;})
+	* Example: do_async([](){std::cout << "test"<< std::endl;})
 	*
-	* Does not block caller thread.
+	* Does not block caller thread. No value is returned
 	*
 	*/
 	template <typename Work_t>
