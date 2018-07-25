@@ -15,7 +15,19 @@ public:
 		, _thread([&]() {_service.run(); })
 	{
 	}
+	~MessageProcessor()
+	{
+		_work_item.reset();
+		_thread.join();
+	}
 
+	/* @brief Schedule synchronous work.
+	*
+	* Example: int i = do_sync([](){return 1O;}).
+	*
+	* Blocks caller thread.
+	*
+	*/
 	template <typename Work_t>
 	auto do_sync(Work_t&& Work)-> decltype(Work())
 	{
@@ -24,6 +36,13 @@ public:
 		return _pt.get_future().get();
 	}
 
+	/* @brief Schedule asynchronous work.
+	*
+	* Example: do_async([](){std::cout << "test<< std::endl;})
+	*
+	* Does not block caller thread.
+	*
+	*/
 	template <typename Work_t>
 	void do_async(Work_t&& Work)
 	{
