@@ -1,17 +1,15 @@
 #include "boost/asio/io_service.hpp"
-#include "boost/thread.hpp"
-#include "boost/thread/future.hpp"
-#include <boost/make_shared.hpp>
 #include <iostream>
 #include <memory>
 #include <utility>
-
+#include <thread>
+#include <future>
 class MessageProcessor
 {
 public:
 	MessageProcessor()
 		:_service()
-		,_work_item(boost::make_shared<boost::asio::io_service::work>(_service))
+		,_work_item(std::make_shared<boost::asio::io_service::work>(_service))
 		, _thread([&]() {_service.run(); })
 	{
 	}
@@ -31,7 +29,7 @@ public:
 	template <typename Work_t>
 	auto do_sync(Work_t&& Work)-> decltype(Work())
 	{
-		boost::packaged_task<decltype(Work())> _pt(std::forward<Work_t>(Work));
+		std::packaged_task<decltype(Work())()> _pt(std::forward<Work_t>(Work));
 		_service.post([&]() {_pt(); });
 		return _pt.get_future().get();
 	}
@@ -50,6 +48,6 @@ public:
 	}
 private:
 	boost::asio::io_service _service;
-	boost::shared_ptr<boost::asio::io_service::work> _work_item;
-	boost::thread _thread;
+	std::shared_ptr<boost::asio::io_service::work> _work_item;
+	std::thread _thread;
 };
